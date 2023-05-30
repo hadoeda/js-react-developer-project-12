@@ -4,7 +4,8 @@
   "description": "some",
   "main": "index.js",
   "scripts": {
-    "start": "npx start-server -s ./frontend/build"
+    "build": "npm run build --prefix frontend",
+    "start": "start-server -s ./frontend/build"
   },
   "author": "",
   "license": "ISC",
