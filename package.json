@@ -4,7 +4,7 @@
   "description": "some",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build --prefix frontend",
+    "build": "build --prefix frontend",
     "start": "start-server -s ./frontend/build"
   },
   "author": "",
