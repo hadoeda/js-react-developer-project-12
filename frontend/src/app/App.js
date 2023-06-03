@@ -1,23 +1,24 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import Login from '../login/Login';
 import NotFound from '../notFound/NotFound';
 import Main from '../main/Main';
-import Preview from '../preview/Preview';
+import Private from '../private/Private';
+import { PrivateRoute } from './AuthProvider';
+import AuthProvider from './AuthProvider';
 
-import './App.css';
-
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='' element={<Main />}>
-          <Route index element={<Preview />} />
-          <Route path='login' element={<Login />} />
-          <Route path='*' element={<NotFound />}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='' element={<Main />}>
+            <Route index element={<PrivateRoute><Private /></PrivateRoute>} />
+            <Route path='login' element={<Login />} />
+            <Route path='*' element={<NotFound />}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
-
-export default App;
