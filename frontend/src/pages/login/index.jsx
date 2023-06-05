@@ -1,11 +1,10 @@
 import { useState, useContext } from 'react';
 import { useFormik } from 'formik';
-import { Form, Button } from 'react-bootstrap';
-import axios from 'axios';
+import { Form, Button, Row } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import routes from '../routes';
-import AuthContext from '../app/authContext';
+import AuthContext from '../../app/authContext';
+import api from '../../api';
 
 export default function Login() {
     const [error, setError] = useState('');
@@ -19,12 +18,10 @@ export default function Login() {
         },
         onSubmit: async values => {
             try {
-                const { data, status } = await axios.post(routes.loginPath(), values);
-                if (status === 200) {
-                  localStorage.setItem('userId', JSON.stringify(data));
-                  auth.logIn();
-                  navigate(state.from.pathname ?? '/');
-                }
+                const { token } = await api.auth(values);
+                localStorage.setItem('userId', token);
+                auth.logIn();
+                navigate(state.from.pathname ?? '/');
             } catch (e) {
                 if (e.response.status === 401) {
                     setError('the username or password is incorrect');
@@ -37,7 +34,7 @@ export default function Login() {
         display: error !== '' ? 'block' : 'none'
     };
     return (
-        <div className="container-md d-flex justify-content-center">
+        <Row className="justify-content-center align-items-center h-100">
             <Form className='w-50' onSubmit={form.handleSubmit}>
                 <Form.Group className="mb-3">
                     <Form.Label htmlFor="username">Имя пользователя</Form.Label >
@@ -68,6 +65,6 @@ export default function Login() {
                 </Form.Group>
                 <Button type="submit">Авторизоваться</Button>
             </Form>
-        </div>
+        </Row>
     );
 }

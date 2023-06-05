@@ -2,9 +2,13 @@ import { useState, useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import AuthContext from './authContext';
+import api from '../api';
+
+const getToken = () => localStorage.getItem('userId');
+api.setTokenGetter(getToken);
 
 const AuthProvider = ({ children }) => {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(getToken() != null);
     
     const logIn = () => setLoggedIn(true);
     const logOut = () => {

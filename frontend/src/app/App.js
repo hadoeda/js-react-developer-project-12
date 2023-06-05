@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Login from '../login/Login';
-import NotFound from '../notFound/NotFound';
-import Main from '../main/Main';
-import Private from '../private/Private';
+import Login from '../pages/login';
+import NotFound from '../pages/notFound';
+import Main from '../pages/main';
+import Chats from '../pages/chats';
 import { PrivateRoute } from './AuthProvider';
 import AuthProvider from './AuthProvider';
 
@@ -13,7 +13,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='' element={<Main />}>
-            <Route index element={<PrivateRoute><Private /></PrivateRoute>} />
+            <Route index element={<PrivateRoute><Chats /></PrivateRoute>} />
             <Route path='login' element={<Login />} />
             <Route path='*' element={<NotFound />}/>
           </Route>
